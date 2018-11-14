@@ -1,30 +1,30 @@
-����Labelme�������۵�Ӱ���עϵͳ
-�����ߣ�chaiwenjun000��suzakue
+基于Labelme开发的眼底影像标注系统
+开发者：chaiwenjun000、Suzakue
 
 
-��ϵͳ����Ҫ���ܣ�
-1. Ϊ�۵�Ӱ��ѡȡ����ȼ���Ŀǰ֧�ֵ��У���������Ĥ���䣨5�����𣩡��ư�ˮ�ײ��䣨3������
-2. ���۵�Ӱ���Ϲ�������֢���򣬲�ѡ�񲢷�֢��ǩ��Ŀǰ֧�ֵĲ���֢�У�Ӳ������������������΢Ѫ����������Ĥ��Ѫ
-3. ��ͬ�Ĳ���֢������ʾΪ��ͬ��������ɫ
-4. ֧��ģ��Ԥ��ע���Ƚ�ͼƬͨ�����ѧϰģ�͵õ���������������Ļ����Ͻ����޸�
-5. �ƶ˴洢��֧�ֽ���ע��ͼƬ����ע����Ϣ�Լ����ɵ�json�ļ��洢���ƶ�mysql���ݿ�
+该系统的主要功能：
+1. 为眼底影像选取病变等级。目前支持的有：糖尿病视网膜病变（5个级别）、黄斑水肿病变（3个级别）
+2. 在眼底影像上勾画并发症区域，并选择并发症标签。目前支持的并发症有：硬性渗出、软性渗出、微血管瘤、视网膜出血
+3. 不同的并发症区域显示为不同的线条颜色
+4. 支持模型预标注：先将图片通过深度学习模型得到结果，在这个结果的基础上进行修改
+5. 云端存储：支持将标注的图片、标注的信息以及生成的json文件存储到云端mysql数据库
 
 
-ʹ�÷�����
-1. ��labelme�ļ������½�config.json�ļ������ݰ�����
-   1��"pre_label_ip": ����ģ��Ԥ��ע��ip��ַ�����۵�ͼ���͵��õ�ַ������������ģ�ͺ�᷵��Ԥ��עjson��
-   2��"get_img_ip": ����ü���ͼƬ��ip��ַ��ģ��Ԥ����ʱ���ͼƬ���вü���������Ҫչʾ�ü����ͼƬ������֢����������޷����۵�ͼƬһһ��Ӧ��
-   3��"token": 5566, �����ֶΣ�ͨ�����ֶ�����������н�����
-   4��"cloud_save_ip": �����ƶ˴洢��ip��ַ��ͨ���õ�ַ����ע�����ɵ�json�ļ��洢���ƶˣ�
-   5��"database_ip": �ƶ�mysql���ݿ��ip��ַ
-   6��"db_name": �ƶ����ݿ������ 
-   7��"username": ���ݿ��¼��
-   8��"password": ���ݿ��½����
-2. ��Ҫ�޸Ĳ��伶���ǩ�����޸�labelme/flags.txt����Ҫ�޸Ĳ���֢��ǩ�����޸�labelme/labels.txt�������������ӵ��ֶβ�֧����Ӣ��ת�����ܡ���Ϊ����ģ��Ԥ�����Ľ�������ǰ�json�ļ����ΪӢ�ı�ǩ��ҳ����Ȼ��ʾ���ı�ǩ�����¼ӱ�ǩ��json�ļ��ڽ�����ñ�ǩ��������ʽ��
-3. ��labelme�ļ����£�����python main.py����
+使用方法：
+1. 在labelme文件夹下新建config.json文件，内容包括：
+   1）"pre_label_ip": 申请模型预标注的ip地址（将眼底图像发送到该地址，服务器运行模型后会返回预标注json）
+   2）"get_img_ip": 申请裁剪后图片的ip地址（模型预处理时会对图片进行裁剪，我们需要展示裁剪后的图片，否则病症区域的坐标无法与眼底图片一一对应）
+   3）"token": 5566, 口令字段（通过该字段与服务器进行交互）
+   4）"cloud_save_ip": 申请云端存储的ip地址（通过该地址将标注后生成的json文件存储到云端）
+   5）"database_ip": 云端mysql数据库的ip地址
+   6）"db_name": 云端数据库的名字 
+   7）"username": 数据库登录名
+   8）"password": 数据库登陆密码
+2. 若要修改病变级别标签，请修改labelme/flags.txt；若要修改并发症标签，请修改labelme/labels.txt。但对于新增加的字段不支持中英文转化功能。（为贴合模型预处理的结果，我们把json文件设计为英文标签，页面仍然显示中文标签。若新加标签，json文件内将输出该标签的中文形式）
+3. 在labelme文件夹下，运行python main.py命令
 
 
-����Ϊԭ��labelme��עϵͳ��˵����
+以下为原版labelme标注系统的说明：
 -----------------------------------------------------------
 
 <img src="https://github.com/wkentaro/labelme/blob/master/labelme/icons/icon.png?raw=true" align="right" />
